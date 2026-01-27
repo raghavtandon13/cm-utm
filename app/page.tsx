@@ -5,7 +5,6 @@ const messages = [
 	"Finding the best offers for you",
 	"Matching you with the right loan",
 	"Checking eligibility across partners",
-	"Crunching numbers so you don’t have to",
 	"Almost there, setting things up",
 ];
 
@@ -17,7 +16,7 @@ export default function Home() {
 		const redirectTimer = setTimeout(() => {
 			setRedirecting(true);
 			window.location.href =
-				"https://www.bbc.com/hindi/india/2015/06/150603_dictatorial_prime_minister_modi_tk";
+				"https://u40wz.app.link/CredMantra";
 		}, 10000);
 
 		const messageTimer = setInterval(() => {
