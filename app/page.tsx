@@ -1,7 +1,7 @@
 "use client";
 
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const messages = [
 	"Finding the best offers for you",
@@ -10,9 +10,8 @@ const messages = [
 	"Almost there, setting things up",
 ];
 
-export default function Home() {
+function PageContent() {
 	const searchParams = useSearchParams();
-
 	const lender = searchParams.get("lender");
 	const id = searchParams.get("id");
 
@@ -36,20 +35,25 @@ export default function Home() {
 	}, []);
 
 	return (
-		<div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+		<div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-black">
 			<div className="flex flex-col items-center gap-4">
-				{/* URL params */}
-				{lender && (
-					<h1 className="text-xl font-semibold">Lender: {lender}</h1>
-				)}
+				{lender && <h1 className="text-xl font-semibold">Lender: {lender}</h1>}
 				{id && <h1 className="text-xl font-semibold">ID: {id}</h1>}
 
 				<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-zinc-900 dark:border-zinc-50" />
 
-				<p className="text-zinc-600 dark:text-zinc-400 text-sm tracking-wide transition-all duration-300">
+				<p className="text-zinc-600 dark:text-zinc-400 text-sm tracking-wide">
 					{redirecting ? "Redirecting…" : messages[messageIndex]}
 				</p>
 			</div>
 		</div>
+	);
+}
+
+export default function Page() {
+	return (
+		<Suspense fallback={null}>
+			<PageContent />
+		</Suspense>
 	);
 }
