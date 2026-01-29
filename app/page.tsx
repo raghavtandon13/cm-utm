@@ -3,23 +3,24 @@
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { heroRedirectionText } from "@/lib/heroRedirectionText";
-import { utmLinks } from "@/lib/utmLinks";
-
-type LenderKey = keyof typeof utmLinks;
+import { type LenderKey, utmLinks } from "@/lib/utmLinks";
 
 function PageContent() {
     const searchParams = useSearchParams();
+
+    const phone = searchParams.get("phone") ?? "";
     const rawLender = searchParams.get("lender");
 
-    const lender = rawLender && rawLender in utmLinks ? (rawLender as LenderKey) : "none";
-    const phone = searchParams.get("phone");
+    const links = utmLinks(phone);
+
+    const lender: LenderKey = rawLender && rawLender in links ? (rawLender as LenderKey) : "none";
 
     const [redirecting, setRedirecting] = useState(false);
     const [messageIndex, setMessageIndex] = useState(0);
 
     useEffect(() => {
-        // ✅ fire-and-forget click tracking
-        if (phone && lender) {
+        // fire-and-forget click tracking
+        if (phone) {
             fetch("/api/clicks", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -29,22 +30,22 @@ function PageContent() {
 
         const redirectTimer = setTimeout(() => {
             setRedirecting(true);
-            window.location.href = utmLinks[lender];
-        }, 10_000);
+            window.location.href = links[lender];
+        }, 2_000);
 
-        const messageTimer = setInterval(
-            () => setMessageIndex((prev) => (prev + 1) % heroRedirectionText.length),
-            2_000,
-        );
+        const messageTimer = setInterval(() => {
+            setMessageIndex((prev) => (prev + 1) % heroRedirectionText.length);
+        }, 10_000);
 
         return () => {
             clearTimeout(redirectTimer);
             clearInterval(messageTimer);
         };
-    }, [phone, lender]);
+    }, [phone, lender, links]);
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-black">
+        <div className="flex flex-col min-h-screen items-center justify-center bg-zinc-50 dark:bg-black">
+            {/* <h1 className="text-red-600 mb-10">{links[lender]}</h1> */} {/* DEBUG */}
             <div className="flex flex-col items-center gap-4">
                 <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-zinc-900 dark:border-zinc-50" />
                 <p className="text-sm tracking-wide text-zinc-600 dark:text-zinc-400">
