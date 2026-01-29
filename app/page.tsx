@@ -31,7 +31,7 @@ function PageContent() {
         const redirectTimer = setTimeout(() => {
             setRedirecting(true);
             window.location.href = links[lender];
-        }, 2_000);
+        }, 5_000);
 
         const messageTimer = setInterval(() => {
             setMessageIndex((prev) => (prev + 1) % heroRedirectionText.length);

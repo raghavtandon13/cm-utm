@@ -4,8 +4,9 @@ import { connectToMongoDB } from "../../../lib/db";
 export async function POST(req: NextRequest) {
     try {
         const { phone, clicked, lender } = await req.json();
-        const conn = await connectToMongoDB();
-        if (!conn?.db) throw new Error("Failed to connect to MongoDB");
+        await connectToMongoDB();
+        // const conn = await connectToMongoDB();
+        // if (!conn?.db) throw new Error("Failed to connect to MongoDB");
 
         const res = { phone: phone, date: new Date(), clicked: clicked, lender: lender };
         conn.db.collection("utm-clicks").insertOne(res);

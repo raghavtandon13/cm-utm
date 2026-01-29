@@ -1,4 +1,5 @@
-import mongoose, { Connection } from "mongoose";
+import mongoose, { type Connection } from "mongoose";
+
 let cachedConnection: Connection | null = null;
 
 export async function connectToMongoDB() {
