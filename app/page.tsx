@@ -44,11 +44,11 @@ function PageContent() {
     }, [phone, lender, links]);
 
     return (
-        <div className="flex flex-col min-h-screen items-center justify-center bg-zinc-50 dark:bg-black">
+        <div className="flex min-h-screen flex-col items-center justify-center bg-zinc-50 dark:bg-black">
             {/* <h1 className="text-red-600 mb-10">{links[lender]}</h1> */} {/* DEBUG */}
             <div className="flex flex-col items-center gap-4">
-                <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-zinc-900 dark:border-zinc-50" />
-                <p className="text-sm tracking-wide text-zinc-600 dark:text-zinc-400">
+                <div className="h-12 w-12 animate-spin rounded-full border-zinc-900 border-b-2 dark:border-zinc-50" />
+                <p className="text-sm text-zinc-600 tracking-wide dark:text-zinc-400">
                     {redirecting ? "Redirecting…" : heroRedirectionText[messageIndex]}
                 </p>
             </div>

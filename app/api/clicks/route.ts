@@ -1,6 +1,6 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { connectToMongoDB } from "../../../lib/db";
 import mongoose from "mongoose";
+import { type NextRequest, NextResponse } from "next/server";
+import { connectToMongoDB } from "@/lib/db";
 
 export async function POST(req: NextRequest) {
     try {
